@@ -5,7 +5,7 @@ from django.db import models
 class Youtubeur(models.Model):
     username = models.CharField(max_length=255)
     view = models.CharField(max_length=50)
-    follower_number = models.CharField(max_length=50)
+    follower = models.CharField(max_length=50)
 
     def __srt__(self):
         return self.username
@@ -13,10 +13,12 @@ class Youtubeur(models.Model):
 class Video_long_format(models.Model):
     account_user  = models.ForeignKey(Youtubeur, one_delete = models.CASCADE)
     title = models.CharField(max_length=255)
-    video_long_format = models.URLField()
+    video = models.URLField()
     thumbnails = models.URLField()
     descriptipn = models.TextField()
     programing_langage = models.CharField(max_length=100)
+    #Voire si c'est quelle basse faut utiliser variable ou condition etc...abs
+    levle = models.CharField(max_length=100)
 
     def __str__(self):
         return self.account_user.username
@@ -29,6 +31,7 @@ class Video_petit_format(models.Model):
     thumbnails = models.URLField()
     description = models.TextField()
     programing_langage = models.CharField(max_length=100)
+    levle = models.CharField(max_length=100)
 
     def __str__(self):
         return self.account_user.username

@@ -1,4 +1,5 @@
 from googleapiclient.discovery import build
+from video.models import Video_long_format, Video_petit_format, Video_list, Youtubeur
 import time
 import isodate
 
@@ -53,20 +54,32 @@ def find_resutls(videos):
         duration = item['contentDetails']['duration']
         duration_seconds = fonction_pour_convertire_en_seconde(duration)
 
-        if duration_seconds >= 3600: #filtrer les videos d'au moins une heure
+        if duration_seconds >= 3600 and duration_seconds <= 300: #filtrer les videos d'au moins une heure
+            user = None
             title = item['snippet']['title']
             description = item['snippet']['description']
             thumbnails = item['snippet']['thumbnails']
             default_thumbnail = thumbnails['default']['url']
             medium_thumbnail = thumbnails['medium']['url']
-            hight_thumbnail = thumbnails['high']['url']
+            high_thumbnail = thumbnails['high']['url']
 
-            print(f'Title: {title}')
-            print(f'Description: {description}')
-            print(f'Duration: {duration}')
-            print(f'meduim thumbnail: {medium_thumbnail}')
-            print(f'default thumbnais: {default_thumbnail}')
-            print(f'high Thumbnails: {hight_thumbnail}')
+            new_video_l = Video_petit_format.objects.create(account_user=None, title=title,thumbnails=thumbnails,programing_langage=None,levle=None, video=None, description=description)
+            new_video_l.save()
         elif duration_seconds <= 3600:
-            pass
+
+            title = item['snippet']['title']
+            description = item['snippet']['description']
+            thuumbnails = item['snippet']['thumbnails']
+            high_thumbnails = thumbnails['high']['url']
+            #cree un niveau 
+            if Youtubeur.objects.get(username=None).exists():
+                new_user = Youtubeur.objects.get(username=None)
+            else:
+
+                new_user = Youtubeur.objects.create(username=None, view=None, follower=None)
+                new_user.save()
+            
+            new_video_p = Video_long_format.objects.create(account_user=None, title=title, video=None, thumbnails=thumbnails, descriptipn=description,programing_langage=None, levle=None)
+            new_video_p.save()
+
 
