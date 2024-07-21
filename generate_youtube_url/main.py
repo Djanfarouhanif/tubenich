@@ -49,6 +49,7 @@ def find_resutls(videos):
     video_response =videos
 
     for item in video_response['items']:
+        print(item)
         duration = item['contentDetails']['duration']
         duration_seconds = fonction_pour_convertire_en_seconde(duration)
 
@@ -66,4 +67,6 @@ def find_resutls(videos):
             print(f'meduim thumbnail: {medium_thumbnail}')
             print(f'default thumbnais: {default_thumbnail}')
             print(f'high Thumbnails: {hight_thumbnail}')
+        elif duration_seconds <= 3600:
+            pass
 
