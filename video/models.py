@@ -13,10 +13,10 @@ class Youtubeur(models.Model):
 class Video_long_format(models.Model):
     account_user  = models.ForeignKey(Youtubeur, one_delete = models.CASCADE)
     title = models.CharField(max_length=255)
-    video = models.URLField()
+    videoId = models.URLField()
     thumbnails = models.URLField()
     descriptipn = models.TextField()
-    programing_langage = models.CharField(max_length=100)
+    programingLangage = models.CharField(max_length=100)
     #Voire si c'est quelle basse faut utiliser variable ou condition etc...abs
     levle = models.CharField(max_length=100)
 
@@ -25,22 +25,22 @@ class Video_long_format(models.Model):
 
 #Video de petit formt moin d' une heure
 class Video_petit_format(models.Model):
-    account_user = models.ForeignKey(Youtubeur, on_delete=models.CASCADE)
+    accountUser = models.ForeignKey(Youtubeur, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
-    video = models.URLField()
+    videoId = models.URLField()
     thumbnails = models.URLField()
     description = models.TextField()
-    programing_langage = models.CharField(max_length=100)
+    programingLangage = models.CharField(max_length=100)
     levle = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.account_user.username
+        return self.accountUser.username
 
 #Les video en forme de formation
 class Video_list(models.Model):
     account_user = models.ForeignKey(Youtubeur, on_delete=models.CASCADE)
     list_video = models.URLField()
-    programming_langage = models.CharFeild(max_length=100)
+    programmingLangage = models.CharFeild(max_length=100)
 
     def __str__(self):
         return self.account_user.username

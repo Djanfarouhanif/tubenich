@@ -63,7 +63,7 @@ def find_resutls(videos):
             medium_thumbnail = thumbnails['medium']['url']
             high_thumbnail = thumbnails['high']['url']
 
-            new_video_l = Video_petit_format.objects.create(account_user=None, title=title,thumbnails=thumbnails,programing_langage=None,levle=None, video=None, description=description)
+            new_video_l = Video_petit_format.objects.create(accountUser=None, title=title,thumbnails=thumbnails,programingLangage=None,levle=None, videoId=None, description=description)
             new_video_l.save()
         elif duration_seconds <= 3600:
 
@@ -79,7 +79,7 @@ def find_resutls(videos):
                 new_user = Youtubeur.objects.create(username=None, view=None, follower=None)
                 new_user.save()
             
-            new_video_p = Video_long_format.objects.create(account_user=None, title=title, video=None, thumbnails=thumbnails, descriptipn=description,programing_langage=None, levle=None)
+            new_video_p = Video_long_format.objects.create(accountUser=None, title=title, videoId=None, thumbnails=thumbnails, descriptipn=description,programingLangage=None, levle=None)
             new_video_p.save()
 
 
