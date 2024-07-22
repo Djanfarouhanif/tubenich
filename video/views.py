@@ -11,5 +11,6 @@ details_video = video_response(all_video_youtube)
 
 resulta_final = find_resutls(details_video, 'Python')
 
+
 def index(request):
     return HttpResponse("<h1>salut</h1>")
