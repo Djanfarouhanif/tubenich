@@ -4,21 +4,19 @@ from django.db import models
 
 class Youtubeur(models.Model):
     username = models.CharField(max_length=255)
-    view = models.CharField(max_length=50)
     follower = models.CharField(max_length=50)
 
     def __srt__(self):
         return self.username
 #Video de plus d'une heure
 class Video_long_format(models.Model):
-    account_user  = models.ForeignKey(Youtubeur, one_delete = models.CASCADE)
+    account_user  = models.ForeignKey(Youtubeur, on_delete = models.CASCADE)
     title = models.CharField(max_length=255)
     videoId = models.URLField()
     thumbnails = models.URLField()
     descriptipn = models.TextField()
     programingLangage = models.CharField(max_length=100)
-    #Voire si c'est quelle basse faut utiliser variable ou condition etc...abs
-    levle = models.CharField(max_length=100)
+    
 
     def __str__(self):
         return self.account_user.username
@@ -31,7 +29,8 @@ class Video_petit_format(models.Model):
     thumbnails = models.URLField()
     description = models.TextField()
     programingLangage = models.CharField(max_length=100)
-    levle = models.CharField(max_length=100)
+    #Voire si c'est quelle basse faut utiliser variable ou condition etc...abs
+    # levle = models.CharField(max_length=100)
 
     def __str__(self):
         return self.accountUser.username
@@ -40,7 +39,7 @@ class Video_petit_format(models.Model):
 class Video_list(models.Model):
     account_user = models.ForeignKey(Youtubeur, on_delete=models.CASCADE)
     list_video = models.URLField()
-    programmingLangage = models.CharFeild(max_length=100)
+    programmingLangage = models.CharField(max_length=100)
 
     def __str__(self):
         return self.account_user.username
