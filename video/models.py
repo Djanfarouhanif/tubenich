@@ -10,16 +10,16 @@ class Youtubeur(models.Model):
         return self.username
 #Video de plus d'une heure
 class Video_long_format(models.Model):
-    account_user  = models.ForeignKey(Youtubeur, on_delete = models.CASCADE)
+    accountUser  = models.ForeignKey(Youtubeur, on_delete = models.CASCADE)
     title = models.CharField(max_length=255)
     videoId = models.URLField()
     thumbnails = models.URLField()
-    descriptipn = models.TextField()
+    description = models.TextField()
     programingLangage = models.CharField(max_length=100)
     
 
     def __str__(self):
-        return self.account_user.username
+        return self.accountUser.username
 
 #Video de petit formt moin d' une heure
 class Video_petit_format(models.Model):
@@ -42,5 +42,5 @@ class Video_list(models.Model):
     programmingLangage = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.account_user.username
+        return self.accountUser.username
 

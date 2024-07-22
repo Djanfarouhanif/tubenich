@@ -23,7 +23,7 @@ def get_youtube_resutls(query, max_results):
         videoDuration = 'long'
     )
     response = request.execute()
-    time.sleep(4)
+    time.sleep(1)
 
     return response
 
@@ -35,9 +35,8 @@ def video_response(data):
         part = 'contentDetails, snippet',
         id = ','.join(video_id)
     )
-    print(id)
     video_response = video_request.execute()
-    time.sleep(10)
+    time.sleep(1)
     return video_response
 
 #Fonction pour converture les duree iso 8601 en secondes
@@ -53,7 +52,7 @@ def channelName(chaineId):
         id = chaineId
     )
     response = request.execute()
-    accountName = response['item'][0]['snippet']['title']
+    accountName = response['items'][0]['snippet']['title']
 
     return accountName
 #Parcours les résultats et afficher les informations des videos d'au moin de une heure
@@ -68,14 +67,16 @@ def find_resutls(videos ,langagePrograming):
         duration_seconds = fonction_pour_convertire_en_seconde(duration)
         #Verifier si l'utilisateur exists ou non
         accountName = channelName(channelId)
-        if Youtubeur.objects.get(username=accountName).exists():
-            currentaccount = Youtubeur.objects.get(username=channelName)
+        if Youtubeur.objects.filter(username=accountName).exists():
+            currentaccount = Youtubeur.objects.get(username=accountName)
         else:
             newYoutubeur = Youtubeur.objects.create(username=accountName)
             newYoutubeur.save()
-            currentaccount = Youtubeur.objects.get(username=accountName)
 
-        if duration_seconds >= 3600 and duration_seconds <= 300: #filtrer les videos d'au moins une heure
+            currentaccount = Youtubeur.objects.get(username=accountName)
+            
+        if duration_seconds <= 3600 : #filtrer les videos d'au moins une heure
+            print("==============================")
             accountUser = currentaccount
             title = item['snippet']['title']
             description = item['snippet']['description']
@@ -84,19 +85,19 @@ def find_resutls(videos ,langagePrograming):
             medium_thumbnail = thumbnails['medium']['url']
             high_thumbnail = thumbnails['high']['url']
             langage  = langagePrograming
-
             new_video_l = Video_petit_format.objects.create(accountUser=accountUser, title=title,thumbnails=thumbnails,programingLangage=langagePrograming, videoId=id, description=description)
             new_video_l.save()
-        elif duration_seconds <= 3600:
 
+        elif duration_seconds >= 3600:
+            pri("***************")
             accountUser = currentaccount
             title = item['snippet']['title']
             description = item['snippet']['description']
             #recuper la minature
-            thuumbnails = item['snippet']['thumbnails']
+            thumbnails = item['snippet']['thumbnails']
             high_thumbnails = thumbnails['high']['url']
             
-            new_video_p = Video_long_format.objects.create(accountUser=accountUser, title=title, videoId=id, thumbnails=thumbnails, descriptipn=description,programingLangage=None)
+            new_video_p = Video_long_format.objects.create(accountUser=accountUser, title=title, videoId=id, thumbnails=thumbnails, description=description,programingLangage=langagePrograming)
             new_video_p.save()
 
 
