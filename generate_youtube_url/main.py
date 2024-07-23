@@ -81,7 +81,7 @@ def find_resutls(videos ,langagePrograming):
                 currentaccount = Youtubeur.objects.get(username=accountName)
                 
             if duration_seconds <= 3600 : #filtrer les videos d'au moins une heure
-                print("==============================")
+               
                 accountUser = currentaccount
                 title = item['snippet']['title']
                 description = item['snippet']['description']
@@ -94,7 +94,6 @@ def find_resutls(videos ,langagePrograming):
                 new_video_l.save()
 
             elif duration_seconds >= 3600:
-                pri("***************")
                 accountUser = currentaccount
                 title = item['snippet']['title']
                 description = item['snippet']['description']
