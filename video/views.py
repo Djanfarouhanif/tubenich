@@ -13,9 +13,9 @@ resulta_final = find_resutls(details_video, 'Python')
 
 
 def index(request):
-    return HttpResponse("<h1>salut</h1>")
+    return HttpResponse("<h1>salut<\h1>")
 
 
-def findRsulte(request):
-    if request.method == 'POST':
-        langage = request.POST.get('langage')
+def findRsulte(request, user):
+    currentUser = request.user
+    
