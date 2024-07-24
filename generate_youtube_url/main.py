@@ -97,12 +97,14 @@ def find_resutls(videos ,langagePrograming):
                 accountUser = currentaccount
                 title = item['snippet']['title']
                 description = item['snippet']['description']
+                
                 #recuper la minature
                 thumbnails = item['snippet']['thumbnails']
                 high_thumbnails = thumbnails['high']['url']
                 
                 new_video_p = Video_long_format.objects.create(accountUser=accountUser, title=title, videoId=id, thumbnails=thumbnails, description=description,programingLangage=langagePrograming)
                 new_video_p.save()
+                print(new_video_p)
     except:
         
         return None
