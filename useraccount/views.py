@@ -1,28 +1,33 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 
-def register(requests):
-    if requests.method == 'POST':
-        username = requests.POST.get("username")
-        email = requests.POST.get('email')
-        password1 = requests.POST.get('password1')
-        password = requests.POST.get('password')
-        langageToLearning = requests.POST.get('langage')
-
+def register(request):
+    if request.method == 'POST':
+        username = request.POST.get("username")
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password = request.POST.get('password')
+        langageToLearning = request.POST.get('langage')
+        
+        print(password1)
         if password1 == password:
         
             if username and email and langageToLearning:
-            
-                if User.objects.get(email=email).exitst():
-                    return messages.info(request, 'Email already exists')
+                if User.objects.filter(email=email).exists():
+                    messages.info(request, 'Email already exists')
+                    return redirect("register")
                 else:
-                    new_user = User.objects.create_user(username=username, email=email, )
+                    new_user = User.objects.create_user(username=username, email=email, password=password )
+                    new_user.save()
+                    return redirect('index')
             else:
-                return messages.info(requests, 'Les informations ne sont pas complete')
+                messages.info(request, 'Les informations ne sont pas complete')
+                return redirect("register")
         else:
-            return messages.info(requests, "Password is not matching ")
+            messages.info(request, "Password is not matching ")
+            return redirect("register")
 
     return HttpResponse('<h1>register page </h1>')
