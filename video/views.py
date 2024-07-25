@@ -5,15 +5,18 @@ from useraccount.models import Student
 from generate_youtube_url.main import get_youtube_resutls ,fonction_pour_convertire_en_seconde, video_response  ,find_resutls
 # # Create your views here.
 
-all_video_youtube = get_youtube_resutls("variable en python", 5)
+def loader():
+    all_video_youtube = get_youtube_resutls("variable en python", 5)
 
-details_video = video_response(all_video_youtube)
+    details_video = video_response(all_video_youtube)
 
-resulta_final = find_resutls(details_video, 'Python')
+    resulta_final = find_resutls(details_video, 'Python')
+
+    return None
 
 
 def index(request):
-    return HttpResponse("<h1>salut<\h1>")
+    return HttpResponse("<h1>salut</h1>")
 
 
 def findRsulte(request, user):
