@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
+from .models import Student
 
 from django.contrib import messages
 
@@ -22,10 +23,17 @@ def register(request):
                     messages.info(request, 'Email already exists')
                     return redirect("register") 
                 else:
-                    new_user = User.objects.create_user(username, email, password)
+                    new_user = User.objects.create_user(username =username, email = email, password= password)
                     new_user.last_name = lastName
                     new_user.save()
-                    return redirect('index')
+
+                    if Student.objects.filter(user=new_user).exists():
+                        messages.info(request, "this personne is already registreted")
+                        return redirect('register')
+                    else:
+                        student = Student.objects.create(user=new_user, langage=langageToLearning)
+                        student.save()
+                        return redirect('index')
             else:
                 messages.info(request, 'Les informations ne sont pas complete')
                 return redirect("register")
@@ -41,8 +49,10 @@ def Login(request):
         password = request.POST.get('password')
 
         user = authenticate(request, username=username, password=password)
+        print(user)
         if user is not None:
             user_login = login(request,user)
+            return redirect('index')
         else:
             messages.info(request, 'username or password is not identifier')
             return redirect('login')
@@ -51,4 +61,4 @@ def Login(request):
 
 def Logout(request):
     logout(request)
-    
+
