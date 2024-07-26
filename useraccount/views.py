@@ -49,7 +49,6 @@ def Login(request):
         password = request.POST.get('password')
 
         user = authenticate(request, username=username, password=password)
-        print(user)
         if user is not None:
             user_login = login(request,user)
             return redirect('index')
@@ -61,4 +60,5 @@ def Login(request):
 
 def Logout(request):
     logout(request)
+    return redirect('login')
 

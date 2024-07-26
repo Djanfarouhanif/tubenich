@@ -44,3 +44,11 @@ class LoginViewTests(TestCase):
         response = self.client.post(self.login_urls, data)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('index'))
+
+class LogoutViewTests(TestCase):
+    def setUp(self):
+        self.logoutUrls = reverse('logout')
+    def testLogout(self):
+        response = self.client.get(self.logoutUrls)
+
+        self.assertRedirects(response, reverse('login'))
