@@ -7,6 +7,7 @@ from django.contrib import messages
 def register(request):
     if request.method == 'POST':
         username = request.POST.get("username")
+        lastName = request.POST.get('last_name')
         email = request.POST.get('email')
         password1 = request.POST.get('password1')
         password = request.POST.get('password')
@@ -20,7 +21,8 @@ def register(request):
                     messages.info(request, 'Email already exists')
                     return redirect("register")
                 else:
-                    new_user = User.objects.create_user(username=username, email=email, password=password )
+                    new_user = User.objects.create_user(username, email, password)
+                    new_user.last_name = lastName
                     new_user.save()
                     return redirect('index')
             else:
