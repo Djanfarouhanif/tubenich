@@ -6,14 +6,14 @@ from generate_youtube_url.main import get_youtube_resutls ,fonction_pour_convert
 # # Create your views here.
 
 def loader():
-    all_video_youtube = get_youtube_resutls("variable en python", 5)
+    all_video_youtube = get_youtube_resutls("COURS en  python", 5)
 
     details_video = video_response(all_video_youtube)
 
     resulta_final = find_resutls(details_video, 'Python')
 
     return None
-
+loader()
 
 def index(request):
     return HttpResponse("<h1>salut</h1>")

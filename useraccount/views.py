@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from .models import Student
-
 from django.contrib import messages
 
 def register(request):

@@ -81,30 +81,37 @@ def find_resutls(videos ,langagePrograming):
                 currentaccount = Youtubeur.objects.get(username=accountName)
                 
             if duration_seconds <= 3600 : #filtrer les videos d'au moins une heure
-               
-                accountUser = currentaccount
-                title = item['snippet']['title']
-                description = item['snippet']['description']
-                thumbnails = item['snippet']['thumbnails']
-                default_thumbnail = thumbnails['default']['url']
-                medium_thumbnail = thumbnails['medium']['url']
-                high_thumbnail = thumbnails['high']['url']
-                langage  = langagePrograming
-                new_video_l = Video_petit_format.objects.create(accountUser=accountUser, title=title,thumbnails=thumbnails,programingLangage=langagePrograming, videoId=id, description=description)
-                new_video_l.save()
+                if Video_petit_format.objects.filter(videoId=id).exists():
+                    print("------------------------------")
+                    pass
+                else:
+                    accountUser = currentaccount
+                    title = item['snippet']['title']
+                    description = item['snippet']['description']
+                    thumbnails = item['snippet']['thumbnails']
+                    default_thumbnail = thumbnails['default']['url']
+                    medium_thumbnail = thumbnails['medium']['url']
+                    high_thumbnail = thumbnails['high']['url']
+                    langage  = langagePrograming
+                    new_video_l = Video_petit_format.objects.create(accountUser=accountUser, title=title,thumbnails=thumbnails,programingLangage=langagePrograming, videoId=id, description=description)
+                    new_video_l.save()
 
             elif duration_seconds >= 3600:
-                accountUser = currentaccount
-                title = item['snippet']['title']
-                description = item['snippet']['description']
-                
-                #recuper la minature
-                thumbnails = item['snippet']['thumbnails']
-                high_thumbnails = thumbnails['high']['url']
-                
-                new_video_p = Video_long_format.objects.create(accountUser=accountUser, title=title, videoId=id, thumbnails=thumbnails, description=description,programingLangage=langagePrograming)
-                new_video_p.save()
-                print(new_video_p)
+                if Video_long_format.objects.filter(videoId=id).exists():
+                    print("=========================================")
+                    pass
+                else:
+                    accountUser = currentaccount
+                    title = item['snippet']['title']
+                    description = item['snippet']['description']
+                    
+                    #recuper la minature
+                    thumbnails = item['snippet']['thumbnails']
+                    high_thumbnails = thumbnails['high']['url']
+                    
+                    new_video_p = Video_long_format.objects.create(accountUser=accountUser, title=title, videoId=id, thumbnails=thumbnails, description=description,programingLangage=langagePrograming)
+                    new_video_p.save()
+                    print(new_video_p)
     except:
         
         return None
