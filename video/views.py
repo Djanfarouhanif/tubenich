@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Video_long_format, Video_petit_format
 from django.http import HttpResponse
 from useraccount.models import Student
@@ -7,12 +7,12 @@ from generate_youtube_url.main import get_youtube_resutls ,fonction_pour_convert
 # # Create your views here.
 
 def loader(request):
-    if reqeust.method == 'POST':
+    if request.method == 'POST':
         search = request.POST.get('search')
         langage = request.POST.get('langage')
         number = request.POST.get('number')
-        number_int = (number)
-        all_video_youtube = get_youtube_resutls(search, number)
+        number_int = int(number)
+        all_video_youtube = get_youtube_resutls(search, number_int)
 
         details_video = video_response(all_video_youtube)
 

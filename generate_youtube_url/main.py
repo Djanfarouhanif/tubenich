@@ -37,7 +37,6 @@ def get_youtube_resutls(query, total_results):
         
             responses.append(response)
         except Exception as e: 
-            print(f"An error occurred: {e}")
             break
     return responses
 
@@ -130,7 +129,7 @@ def find_resutls(videos ,langagePrograming):
                         
                         new_video_p = Video_long_format.objects.create(accountUser=accountUser, title=title, videoId=id, thumbnails=thumbnails, description=description,programingLangage=langagePrograming)
                         new_video_p.save()
-                        print(new_video_p)
+                    
     except:     
         return None
 
