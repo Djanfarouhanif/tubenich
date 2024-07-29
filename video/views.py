@@ -3,9 +3,11 @@ from .models import Video_long_format, Video_petit_format
 from django.http import HttpResponse
 from useraccount.models import Student
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from generate_youtube_url.main import get_youtube_resutls ,fonction_pour_convertire_en_seconde, video_response  ,find_resutls
 # # Create your views here.
 
+@login_required(redirect_field_name= 'login')
 def loader(request):
     if request.method == 'POST':
         search = request.POST.get('search')
@@ -24,7 +26,7 @@ def loader(request):
 
     return None
 #loader()
-
+@login_required(redirect_field_name='login')
 def index(request):
     return HttpResponse("<h1>salut</h1>")
 
