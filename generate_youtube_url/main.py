@@ -7,7 +7,7 @@ import isodate
 api_key = 'AIzaSyAYaYNBCibmanBU9NHpo2iFNkO7VJhXi58'
 
 youtube = build('youtube', 'v3', developerKey=api_key)
-#Fonction pour recuper toute les formations sur les video
+#Fonction pour recuper toute les informations sur les video rechercher 
 def get_youtube_resutls(query, total_results):
     max_results_per_request = 50
     all_videos = []
@@ -40,7 +40,7 @@ def get_youtube_resutls(query, total_results):
             break
     return responses
 
-#Fonction pour retourner les details sur la video
+#Fonction pour retourner les details sur la video en utilisant id de chaque video recuper dans la fonction precedente
 def video_response(datas):
     all_video_response = []
     if datas:
@@ -66,9 +66,11 @@ def fonction_pour_convertire_en_seconde(duration):
     parsed_duration = isodate.parse_duration(duration)
 
     return int(parsed_duration.total_seconds())
+
 #Fonction pour retouner le nom de la chaine
 
 def channelName(chaineId):
+    # pour chaque video trouver il y'a un id de la chaine ont recuper ces id pour recuperer le nom de la chaîne
     request = youtube.channels().list(
         part = 'snippet',
         id = chaineId
@@ -76,7 +78,8 @@ def channelName(chaineId):
     response = request.execute()
     accountName = response['items'][0]['snippet']['title']
     return accountName
-#Parcours les résultats et afficher les informations des videos d'au moin de une heure
+
+#Fonction pour classer les video de format long et des video de format courts
 def find_resutls(videos ,langagePrograming):
     try:
         for video in videos:
@@ -113,10 +116,9 @@ def find_resutls(videos ,langagePrograming):
                         langage  = langagePrograming
                         new_video_l = Video_petit_format.objects.create(accountUser=accountUser, title=title,thumbnails=thumbnails,programingLangage=langagePrograming, videoId=id, description=description)
                         new_video_l.save()
-
+                #filtrer les video de plus de 1h
                 elif duration_seconds >= 3600:
                     if Video_long_format.objects.filter(videoId=id).exists():
-                        
                         pass
                     else:
                         accountUser = currentaccount

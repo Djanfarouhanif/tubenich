@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
-from .models import Student
+from .models import Profile
 
 
 class RegisterViewTests(TestCase):
@@ -26,7 +26,7 @@ class RegisterViewTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertTrue(User.objects.filter(username='testuser').exists())
         user = User.objects.get(username='testuser')
-        self.assertTrue(Student.objects.filter(user=user).exists())
+        self.assertTrue(Profile.objects.filter(user=user).exists())
 
     def test_register_view_redirect_authenticate_user(self):
         self.client.force_login(User.objects.create_user(username= 'existinguser', password='password123'))

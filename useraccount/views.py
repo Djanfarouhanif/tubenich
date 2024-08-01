@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
-from .models import Student
+from .models import Profile
 from django.contrib import messages
 
 def register(request):
@@ -13,6 +13,10 @@ def register(request):
         password1 = request.POST.get('password1')
         password = request.POST.get('password')
         langageToLearning = request.POST.get('langage')
+        if request.Files.get('profile'):
+            profile_image = request.Files.get('profile')
+        else: 
+            profile_image = Student.profile
         
         print(password1)
         if password1 == password:
@@ -26,12 +30,12 @@ def register(request):
                     new_user.last_name = lastName
                     new_user.save()
 
-                    if Student.objects.filter(user=new_user).exists():
+                    if Profile.objects.filter(user=new_user).exists():
                         messages.info(request, "this personne is already registreted")
                         return redirect('register')
                     else:
-                        student = Student.objects.create(user=new_user, langage=langageToLearning)
-                        student.save()
+                        profile = Profile.objects.create(user=new_user, langage=langageToLearning, profile=profile_image)
+                        profile.save()
                         return redirect('index')
             else:
                 messages.info(request, 'Les informations ne sont pas complete')
