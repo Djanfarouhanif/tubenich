@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Video_long_format, Video_petit_format
 from django.http import HttpResponse
-from useraccount.models import Student
+from useraccount.models import Profile
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from generate_youtube_url.main import get_youtube_resutls ,fonction_pour_convertire_en_seconde, video_response  ,find_resutls
