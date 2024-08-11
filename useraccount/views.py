@@ -43,9 +43,11 @@ def register(request):
 @api_view(["POST"])
 @permission_classes([permissions.AllowAny])
 def Login(request):
+    #Recuperation des données de l'utilisateur
     username = request.data.get("username")
     password = reqeust.data.get('password')
 
+    #Verifier si l'utilisateur est enregistre
     user = authenticate(request, username= username, password=password)
     if user is not None:
         login(requet, user)
@@ -53,6 +55,7 @@ def Login(request):
         return Response({'user': serializer.data}, status.HTTP_200_OK)
     else:
         return Response({"error": "Invalid username or password"}, status=status.HTTP_401_UNAUTHORIZED)
+
 
 def Logout(request):
     logout(request)
