@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'video',
     'useraccount',
     'rest_framework',
+    'rest_framework_simplejwt'
 ]
 
 MIDDLEWARE = [
@@ -142,5 +143,9 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES':[
+       'rest_framework_simplejwt.authentication.JWTAuthentication'
+
     ]
 }
