@@ -20,24 +20,14 @@ def register(request):
     #Verifier si la method est post
     if request.method == "POST":
         #Recupere les donners utilisateur avec serializer
+        print('---------------------------------------------------------------')
         serializer = ProfileSerializers(data=request.data, context={'request': request})
-        
+        print("***********************************")
         #si les donner sont valid ont cree un nouveau utilisateur et son profile
         if serializer.is_valid():
-            print("lllllllllllllllsssssssssssssssssssssssssssssssssssssddddddddddddddddddddfffffffff")
-            user_data = serializer.validated_data['user']
-            user = User.objects.create_user(
-                username = user_data['username'],
-                email = user_data['email'],
-                password = user_data['password'],
-                last_name = user_data['last_name']  
-            )
+            print("*******************************")
+            serializer.save()
 
-            profile = Profile.objects.create(
-                user=user,
-                langage= serializer.validated_data['langage'],
-                profile_image = serializer.validated_data.get('profile_image', Profile.profile_image.default)
-            )
             #Si l'enregistrement c'est effectuer ont renvoyer les donner 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         #si il y'a une erreure ont retour un message d'errure
