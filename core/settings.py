@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'video',
     'useraccount',
     'rest_framework',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -149,3 +151,8 @@ REST_FRAMEWORK = {
 
     ]
 }
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:4200'
+]
+
+CORS_ALLOW_CREDENTIALS = True
