@@ -8,18 +8,23 @@ from .serializer import ProfileSerializers, UserSerializer
 from rest_framework import status, permissions
 from rest_framework.response import Response 
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.parsers import MultiPartParser, FormParser
 
 #@api_view permet d'accepter seulement le method post
 #@permission_classess([permissions.AllowAny]) permet de donne accet a tout le monde
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def register(request):
+    
+
     #Verifier si la method est post
     if request.method == "POST":
         #Recupere les donners utilisateur avec serializer
-        serializer = ProfileSerializers(data=request.data, context={'request', request})
+        serializer = ProfileSerializers(data=request.data, context={'request': request})
+        
         #si les donner sont valid ont cree un nouveau utilisateur et son profile
         if serializer.is_valid():
+            print("lllllllllllllllsssssssssssssssssssssssssssssssssssssddddddddddddddddddddfffffffff")
             user_data = serializer.validated_data['user']
             user = User.objects.create_user(
                 username = user_data['username'],
@@ -31,12 +36,12 @@ def register(request):
             profile = Profile.objects.create(
                 user=user,
                 langage= serializer.validated_data['langage'],
-                profile_image = serializer.validated_data.get('profile', Profile.profile_image.default)
+                profile_image = serializer.validated_data.get('profile_image', Profile.profile_image.default)
             )
             #Si l'enregistrement c'est effectuer ont renvoyer les donner 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         #si il y'a une erreure ont retour un message d'errure
-        return Response(serializer.errors, stauts= status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
     return Response({"error": "Method not Allowed"}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
@@ -51,13 +56,14 @@ def Login(request):
     user = authenticate(request, username= username, password=password)
     if user is not None:
         login(requet, user)
-        serializer = UserSerializer(user, context={"request", request})
+        serializer = UserSerializer(user, context={"request": request})
         return Response({'user': serializer.data}, status.HTTP_200_OK)
     else:
         return Response({"error": "Invalid username or password"}, status=status.HTTP_401_UNAUTHORIZED)
 
-
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
 def Logout(request):
     logout(request)
-    return redirect('login')
+    return Response({'details': "logged succesfull"}, status=status.HTTP_200_OK)
 

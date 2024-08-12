@@ -7,7 +7,7 @@ userModels = User()
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     langage = models.CharField(max_length=90)
-    profile_image = models.ImageField(default="" , upload_to="profile")
+    profile_image = models.ImageField(default=None , upload_to="profile")
 
     def __str__(self):
         return self.user.username
