@@ -5,8 +5,13 @@ from useraccount.models import Profile
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from generate_youtube_url.main import get_youtube_resutls ,fonction_pour_convertire_en_seconde, video_response  ,find_resutls
-# # Create your views here.
+#the imprt the rest_frameworks moduls
+from rest_framework.decorators import permission_classes, api_view
+from rest_framework.response import Response
+from rest_framework import status, permissions
+from .serializer import VideoLongFormatSerializer
 
+#Fonction pour telecharger les donnes youtube
 @login_required(redirect_field_name= 'login')
 def loader(request):
     if request.method == 'POST':
@@ -25,10 +30,15 @@ def loader(request):
         return redirect('loader')
 
     return None
-#loader()
-@login_required(redirect_field_name='login')
+
+#Fonction pour envoyer les informations stocker dans la base de donner 
+@api_view(["GET"])
+@permission_classes([permissions.IsAuthenticated])
 def index(request):
-    return HttpResponse("<h1>salut</h1>")
+    video_long = Video_long_format.objects.all()
+    serializer = VideoLongFormatSerializer(video_long, many=True, context={'request':request})
+
+    return Response(serializer.data,status=status.HTTP_200_OK )
 
 
 # def findRsulte(request, user):
