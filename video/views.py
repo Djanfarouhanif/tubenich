@@ -12,7 +12,7 @@ from rest_framework import status, permissions
 from .serializer import VideoLongFormatSerializer
 
 #Fonction pour telecharger les donnes youtube
-@login_required(redirect_field_name= 'login')
+
 def loader(request):
     if request.method == 'POST':
         search = request.POST.get('search')
