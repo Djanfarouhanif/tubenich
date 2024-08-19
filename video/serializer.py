@@ -12,3 +12,8 @@ class VideoLongFormatSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Video_long_format
         fields = ['accountUser', 'title', 'videoId', 'thumbnails', 'description', 'programingLangage']
+
+class LoaderSerializer(serializers.Serializer):
+    search = serializers.CharField(max_length=255)
+    langage = serializers.CharField(max_length=100)
+    number = serializers.IntegerField()

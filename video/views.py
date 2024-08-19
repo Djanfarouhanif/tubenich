@@ -9,7 +9,7 @@ from generate_youtube_url.main import get_youtube_resutls ,fonction_pour_convert
 from rest_framework.decorators import permission_classes, api_view
 from rest_framework.response import Response
 from rest_framework import status, permissions
-from .serializer import VideoLongFormatSerializer
+from .serializer import VideoLongFormatSerializer, LoaderSerializer
 
 #Fonction pour telecharger les donnes youtube
 @api_view(['POST'])
@@ -17,16 +17,20 @@ from .serializer import VideoLongFormatSerializer
 def loader(request):
 
     if request.method == 'POST':
-        search = request.POST.get('search')
-        langage = request.POST.get('langage')
-        number = request.POST.get('number')
-        number_int = int(number)
-        all_video_youtube = get_youtube_resutls(search, number_int)
+        serializer  = LoaderSerializer(data=request.data)
 
-        details_video = video_response(all_video_youtube)
+        if serializer.is_valid():
 
-        resulta_final = find_resutls(details_video, langage)
-        redirect('loader')
+            search = serializer.validated_data.get('search')
+            langage = serializer.validated_data.get('langage')
+            number = serializer.validated_data.get('number')
+            
+            all_video_youtube = get_youtube_resutls(search, number)
+
+            details_video = video_response(all_video_youtube)
+
+            resulta_final = find_resutls(details_video, langage)
+        return redirect('loader')
     else:
         
         return HttpResponse('<p>hello</p>')
