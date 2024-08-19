@@ -12,8 +12,10 @@ from rest_framework import status, permissions
 from .serializer import VideoLongFormatSerializer
 
 #Fonction pour telecharger les donnes youtube
-
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
 def loader(request):
+
     if request.method == 'POST':
         search = request.POST.get('search')
         langage = request.POST.get('langage')
@@ -26,10 +28,8 @@ def loader(request):
         resulta_final = find_resutls(details_video, langage)
         redirect('loader')
     else:
-        messages.info(request, 'Errore in your request')
-        return redirect('loader')
-
-    return None
+        
+        return HttpResponse('<p>hello</p>')
 
 #Fonction pour envoyer les informations stocker dans la base de donner 
 @api_view(["GET"])
