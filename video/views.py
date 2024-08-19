@@ -30,10 +30,10 @@ def loader(request):
             details_video = video_response(all_video_youtube)
 
             resulta_final = find_resutls(details_video, langage)
-        return redirect('loader')
-    else:
+            return Response(status=status.HTTP_200_OK)
+        else:
         
-        return HttpResponse('<p>hello</p>')
+            return Response(serializer.error_messages,status=status.HTTP_400_BAD_REQUEST)
 
 #Fonction pour envoyer les informations stocker dans la base de donner 
 @api_view(["GET"])
