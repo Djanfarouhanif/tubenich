@@ -114,8 +114,7 @@ def find_resutls(videos ,langagePrograming):
                         medium_thumbnail = thumbnails['medium']['url']
                         high_thumbnail = thumbnails['high']['url']
                         langage  = langagePrograming
-                        new_video_l = Video_petit_format.objects.create(accountUser=accountUser, title=title,thumbnails=thumbnails,programingLangage=langagePrograming, videoId=id, description=description)
-                        new_video_l.save()
+                        new_video_l = Video_petit_format.objects.create(accountUser=accountUser, title=title,thumbnails=high_thumbnail,programingLangage=langagePrograming, videoId=id, description=description)
                 #filtrer les video de plus de 1h
                 elif duration_seconds >= 3600:
                     if Video_long_format.objects.filter(videoId=id).exists():
@@ -128,9 +127,8 @@ def find_resutls(videos ,langagePrograming):
                         #recuper la minature
                         thumbnails = item['snippet']['thumbnails']
                         high_thumbnails = thumbnails['high']['url']
+                        new_video_p = Video_long_format.objects.create(accountUser=accountUser, title=title, videoId=id, thumbnails=high_thumbnails, description=description,programingLangage=langagePrograming)
                         
-                        new_video_p = Video_long_format.objects.create(accountUser=accountUser, title=title, videoId=id, thumbnails=thumbnails, description=description,programingLangage=langagePrograming)
-                        new_video_p.save()
                     
     except:     
         return None
