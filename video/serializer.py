@@ -17,3 +17,6 @@ class LoaderSerializer(serializers.Serializer):
     search = serializers.CharField(max_length=255)
     langage = serializers.CharField(max_length=100)
     number = serializers.IntegerField()
+
+class VideoSerializer(serializers.Serializer):
+    vidoId = serializers.CharField(max_length=255)

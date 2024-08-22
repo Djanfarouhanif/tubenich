@@ -9,7 +9,11 @@ from generate_youtube_url.main import get_youtube_resutls ,fonction_pour_convert
 from rest_framework.decorators import permission_classes, api_view
 from rest_framework.response import Response
 from rest_framework import status, permissions
-from .serializer import VideoLongFormatSerializer, LoaderSerializer
+from .serializer import VideoLongFormatSerializer, LoaderSerializer,VideoSerializer
+
+# i = Video_long_format.objects.all()
+# for n in i:
+#     print(n.videoId)
 
 #Fonction pour telecharger les donnes youtube
 @api_view(['POST'])
@@ -45,6 +49,13 @@ def index(request):
     return Response(serializer.data,status=status.HTTP_200_OK )
 
 
-# def findRsulte(request, user):
-#     currentUser = request.user
+#Fonction pour recuper une vidoe
+@api_view(['POST'])
+def video(request):
+    serializer = VideoSerializer(data=request.data)
+    if serializer.is_valid():
+        video_info = Video_long_format.objects.get(videoId=serializer.validated_data.get('videoId'))
+        print(video_info)
+        
+    return Response({'daa': "video_info"}, status=status.HTTP_200_OK)
     
