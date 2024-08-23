@@ -53,6 +53,7 @@ def index(request):
 @api_view(['POST'])
 def video(request):
     serializer = VideoSerializer(data=request.data)
+    print(request.data)
     if serializer.is_valid():
         try:
             video_info = Video_long_format.objects.get(videoId=serializer.validated_data.get('videoId'))
