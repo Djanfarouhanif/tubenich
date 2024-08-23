@@ -19,4 +19,4 @@ class LoaderSerializer(serializers.Serializer):
     number = serializers.IntegerField()
 
 class VideoSerializer(serializers.Serializer):
-    vidoId = serializers.CharField(max_length=255)
+    videoId = serializers.CharField(max_length=255)

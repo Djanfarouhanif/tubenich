@@ -54,8 +54,17 @@ def index(request):
 def video(request):
     serializer = VideoSerializer(data=request.data)
     if serializer.is_valid():
-        video_info = Video_long_format.objects.get(videoId=serializer.validated_data.get('videoId'))
-        print(video_info)
+        try:
+            video_info = Video_long_format.objects.get(videoId=serializer.validated_data.get('videoId'))
+
+            return Response({"data": {
+                "title": video_info.title,
+                "description": video_info.description,
+                "duration": "10:23"
+            }}, status=status.HTTP_200_OK)
+        except Video_long_format.DoesNotExist:
+            return Response({'error': "video not found"}, status=status.HTTP_404_NOT_FOUND)
         
-    return Response({'daa': "video_info"}, status=status.HTTP_200_OK)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
