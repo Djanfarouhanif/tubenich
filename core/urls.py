@@ -16,12 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from video.views import VideoViewSet, VideoProgressViewSet
+
+router = DefaultRouter()
+router.register(r'video', VideoViewSet, basename = 'video')
+router.register(r'video-progress', VideoProgressViewSet, basename="video-progress")
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('video.urls')),
     path('', include('useraccount.urls')),
     
-]
+] + router.urls
+

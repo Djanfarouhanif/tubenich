@@ -1,22 +1,17 @@
 from rest_framework import serializers
-from .models import Video_long_format, Youtubeur
+from .models import Video, VideoProgress
+from useraccount.serializer import UserSerializer
 
-class YoutubeurSerializer(serializers.HyperlinkedModelSerializer):
+class VideoSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Youtubeur
-        fields = ['url', 'username', 'follower']
+        model = Video
+        fields = '__all__'
 
+class VideoProgressSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    video = VideoSerializer()
 
-class VideoLongFormatSerializer(serializers.HyperlinkedModelSerializer):
-    accountUser  = serializers.PrimaryKeyRelatedField(queryset=Youtubeur.objects.all())
     class Meta:
-        model = Video_long_format
-        fields = ['accountUser', 'title', 'videoId', 'thumbnails', 'description', 'programingLangage']
-
-class LoaderSerializer(serializers.Serializer):
-    search = serializers.CharField(max_length=255)
-    langage = serializers.CharField(max_length=100)
-    number = serializers.IntegerField()
-
-class VideoSerializer(serializers.Serializer):
-    videoId = serializers.CharField(max_length=255)
+        model = VideoProgress
+        fields = '__all__'

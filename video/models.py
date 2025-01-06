@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 class Video(models.Model):
     title = models.CharField(max_length=255)
     url = models.URLField() # L'URL YOUTUBE
-    order = models.IntergerField() # L'ordre de la vidéo
+    order = models.IntegerField() # L'ordre de la vidéo
 
     def __str__(self):
         return self.title
